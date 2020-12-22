@@ -1,9 +1,72 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ title }}</title>
+	<title>{{ title }}</title> 
+
+	{% include "snippets/styles.html" %}
+
+
+
 </head>
-<body>
-	<h1>this is register page at registerApp</h1>
+<body>t
+	<div class="container">
+		<h1>Registration</h1>
+		<form>
+			<div class="mb-3">
+				<input type="text" class="form-control" id="mobilenumber" placeholder="Mobile number" aria-describedby="">
+			</div>
+			<div class="mb-3">
+				<input type="text" class="form-control" id="firstname" placeholder="First name" aria-describedby="">
+			</div>
+			<div class="mb-3">
+				<input type="text" class="form-control" id="lastname" placeholder="Last name" aria-describedby="">
+			</div>
+			
+			<label for="exampleInputEmail1" class="form-label">Date of Birth</label>
+			<div class="dropdown">
+				<input type="button" name="birthday" id="dropdate" value="">
+			</div>
+
+			<div>
+				<div class="form-check form-check-inline">
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="customRadioInline1" name="gender"	class="custom-control-input" value="Male">	
+						<label class="custom-control-label" for="customRadioInline1">Male</label>
+					</div>
+						
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="customRadioInline2" name="gender" class="custom-control-input" value="Female"> 
+						<label class="custom-control-label" for="customRadioInline2">Female</label>
+					</div> 
+				</div>
+			</div>
+
+			<div class="mb-3">
+				<input type="email" class="form-control" id="email" placeholder="email address" aria-describedby="">
+			</div>
+			
+		
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+
+	</div>
+
+	{% include "snippets/footerscript.html" %}
+	
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+	<script  type="text/javascript" src="{% static "vendor/js/date.format.js" %}" ></script>
+	<script  type="text/javascript" src="{% static "vendor/js/jquery-dropdate.js" %}" ></script>
+
+	<script>
+		$(document).ready(function(){
+		    $('#dropdate').dropdate({
+		        dateFormat:'mm/dd/yyyy'
+		    });
+		});
+	</script>
+
+
 </body>
-</html>
+</html> 
