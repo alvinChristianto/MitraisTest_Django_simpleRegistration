@@ -9,18 +9,27 @@
 
 
 </head>
-<body>t
+<body>
 	<div class="container">
+
 		<h1>Registration</h1>
-		<form>
+		<form action="" class="" method="POST">
+			{% csrf_token %}
+			<strong style="color: red">{{ error.error_mobilenumber }}</strong>
+			
 			<div class="mb-3">
-				<input type="text" class="form-control" id="mobilenumber" placeholder="Mobile number" aria-describedby="">
+				<input type="text" class="form-control" id="mobilenumber" placeholder="Mobile number" name="mobilenumber" aria-describedby="" required autofocus>
 			</div>
+
+			<strong style="color: red">{{ error.error_firstname }}</strong>
+			
 			<div class="mb-3">
-				<input type="text" class="form-control" id="firstname" placeholder="First name" aria-describedby="">
+				<input type="text" class="form-control" id="firstname" placeholder="First name" name="firstname" aria-describedby=""  required autofocus>
 			</div>
+
+			<strong style="color: red">{{ error.error_lastname }}</strong>
 			<div class="mb-3">
-				<input type="text" class="form-control" id="lastname" placeholder="Last name" aria-describedby="">
+				<input type="text" class="form-control" id="lastname" placeholder="Last name" name="lastname" aria-describedby="" required autofocus>
 			</div>
 			
 			<label for="exampleInputEmail1" class="form-label">Date of Birth</label>
@@ -43,14 +52,24 @@
 			</div>
 
 			<div class="mb-3">
-				<input type="email" class="form-control" id="email" placeholder="email address" aria-describedby="">
+				<input type="email" class="form-control" id="email" placeholder="email address" name="email" aria-describedby=""  required autofocus>
 			</div>
 			
 		
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form>
+			<button type="submit" id="btn_submit" class="btn btn-primary">Register</button>
 
-	</div>
+
+		</form>
+<!--
+		<div id="">sda<strong id="successmessage" style="color: red">{{ success.message }}</strong>
+		</div>
+-->
+		<div id="successmessage" title="Basic dialog"> 
+			<p>{{ success.message }}</p>		
+		</div>
+
+		<button  id="btn_redirect_login" class="btn btn-secondary"  style="visibility: hidden" >Login</button>
+
 
 	{% include "snippets/footerscript.html" %}
 	
@@ -65,6 +84,17 @@
 		        dateFormat:'mm/dd/yyyy'
 		    });
 		});
+
+    	if ($('#successmessage > p').is(':empty')) { 
+ 	   		console.log("empty do nothing");		
+		}else {
+			document.getElementById("btn_submit").disabled = true;
+			document.getElementById("mobilenumber").disabled = true;
+			document.getElementById("firstname").disabled = true;
+			document.getElementById("lastname").disabled = true;
+			document.getElementById("email").disabled = true;
+			document.getElementById("btn_redirect_login").style.visibility = 'visible'
+		}
 	</script>
 
 
