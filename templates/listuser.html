@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ title }}</title>
+	<title>list user</title>
+
+	{% include "snippets/styles.html" %}
+
 </head>
 <body>
-	<h1>{{ page }}</h1>
-	{% for itemlist in item %}
-	<ul>
-		<li>user with name {{ itemlist.firstname }} and email {{itemlist.email }} </li>
-	</ul>
-	{% endfor %}
+	<div class="container">
+		<h1>List User</h1>
+		{% for itemlist in item %}
+		<ul>
+			<li>user with name {{ itemlist.firstname }} and email {{itemlist.email }} </li>
+		</ul>
+		{% endfor %}
+
+		<a href="/newuser">input user</a>
+	</div>
 </body>
 </html>

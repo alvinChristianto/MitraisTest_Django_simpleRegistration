@@ -16,25 +16,28 @@ from rest_framework.decorators import api_view
 def index(request) :
 	return render(request, 'index_registerApp.html')	
 
-def chkName(strText) :
-	if strText.isalpha() == False :
-		error = "name is invalid"
-		return (0,error)
-	else :
-		return (1,strText)
-
-def chkMobilenumber(mobNumber):
-	if mobNumber[:3] != "+62" :
-		error = "Mobile Number invalid, should use +62"
-		return (0,error)
-	else :
-		return (1,mobNumber)
 
 def newuser(request) :
-	print " dddd %s" %(request.POST)
 	contextError = {}
 	contextSuccess = {}
 	success_data = {}
+
+
+	def chkName(strText) :
+		if strText.isalpha() == False :
+			error = "name is invalid"
+			return (0,error)
+		else :
+			return (1,strText)
+
+	def chkMobilenumber(mobNumber):
+		if mobNumber[:4] != "+628" :
+			error = "Mobile Number invalid, should use +62"
+			return (0,error)
+		else :
+			return (1,mobNumber)
+
+
 	if request.method == 'POST':	
 		check_firstname	= chkName(request.POST['firstname'])
 		check_lastname	= chkName(request.POST['lastname'])
@@ -61,46 +64,38 @@ def newuser(request) :
 		print "success %s" %(success_data)
 	
 		if len(contextError) == 0 :
-			p = Register(
+			data = Register(
 					firstname=success_data['firstname'], 
 					lastname=success_data['lastname'], 
 					email=request.POST['email'], 
 					mobilenumber=request.POST['mobilenumber'], 
 					dateofbirth="2020-12-22 00:00:00.000000", 
 					gender="M" )
-			p.save()
+			data.save()
 			contextSuccess = {
 				'message' : "data successfully insert !"
 			}
 
 
-	#return render(request, 'register.html', contextError)
-	return render(request, 'register.html', {'error': contextError, 'success': contextSuccess})
-#def newuser(request) :
-#	contact_form = ContactForm()
-#	context = {
-#		'heading'		: 'contact heading',
-#		'contact_form' 	: contact_form
-#	}
-#	if request.method == 'POST' :
-#		context['nama'] = request.POST['nama']
-#
-#	return render(request, 'register.html', context)	
+	return render(request, 'register.html', {'error'	: contextError,
+											 'success'	: contextSuccess})
 
 def listuser(request) :
 	item = Register.objects.all()
-	print item
 	context = {
-		'title' : 	'List All User ', 
-		'page' 	:	'this return all user that already registered',
 		'item' 	:	item,
 	}
 	return render(request, 'listuser.html', context)
-##---
 
 
+def loginuser(request, pk) :
+	try:
+		RegisterData = Register.objects.get(email=pk)
+	except ObjectDoesNotExist:
+		print("Either the blog or entry doesn't exist.")
 
-
+##--------------##
+'''
 @api_view(['GET', 'POST', 'DELETE'])
 def register_user(request):
 	if request.method == 'GET':
@@ -159,4 +154,4 @@ def register_list(request):
 	if request.method == 'GET': 
 		register_serializer = RegisterSerializer(register, many=True)
 		return JsonResponse(register_serializer.data, safe=False)
-    
+'''

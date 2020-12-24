@@ -18,7 +18,7 @@
 			<strong style="color: red">{{ error.error_mobilenumber }}</strong>
 			
 			<div class="mb-3">
-				<input type="text" class="form-control" id="mobilenumber" placeholder="Mobile number" name="mobilenumber" aria-describedby="" required autofocus>
+				<input type="text" class="form-control" id="mobilenumber" placeholder="Mobile number +62" name="mobilenumber" aria-describedby="" required autofocus>
 			</div>
 
 			<strong style="color: red">{{ error.error_firstname }}</strong>
@@ -60,16 +60,15 @@
 
 
 		</form>
-<!--
-		<div id="">sda<strong id="successmessage" style="color: red">{{ success.message }}</strong>
-		</div>
--->
+
 		<div id="successmessage" title="Basic dialog"> 
 			<p>{{ success.message }}</p>		
 		</div>
-
-		<button  id="btn_redirect_login" class="btn btn-secondary"  style="visibility: hidden" >Login</button>
-
+		<!--  href="/login" -->
+		<a href="" id="btn_redirect_login" class="btn btn-secondary"  style="visibility: hidden" >Login</a>
+		
+		<br>
+		<a href="/listuser">see all registered user</a>
 
 	{% include "snippets/footerscript.html" %}
 	
