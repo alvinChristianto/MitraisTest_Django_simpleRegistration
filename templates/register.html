@@ -18,60 +18,92 @@
 			<strong style="color: red">{{ error.error_mobilenumber }}</strong>
 			
 			<div class="mb-3">
-				<input type="text" class="form-control" id="mobilenumber" placeholder="Mobile number +62" name="mobilenumber" aria-describedby="" required autofocus>
+				<input type="text" class="form-control" id="mobilenumber" value="+6285729577104" placeholder="Mobile number +62" name="mobilenumber" aria-describedby=""  required autofocus>
 			</div>
 
 			<strong style="color: red">{{ error.error_firstname }}</strong>
 			
 			<div class="mb-3">
-				<input type="text" class="form-control" id="firstname" placeholder="First name" name="firstname" aria-describedby=""  required autofocus>
+				<input type="text" class="form-control" id="firstname" value="alin" placeholder="First name" name="firstname" aria-describedby=""  required autofocus>
 			</div>
 
 			<strong style="color: red">{{ error.error_lastname }}</strong>
 			<div class="mb-3">
-				<input type="text" class="form-control" id="lastname" placeholder="Last name" name="lastname" aria-describedby="" required autofocus>
+				<input type="text" class="form-control" id="lastname" value="alin" placeholder="Last name" name="lastname" aria-describedby="" required autofocus>
 			</div>
 			
+			<!-- IT USED TO select date with dropdate js
 			<label for="exampleInputEmail1" class="form-label">Date of Birth</label>
 			<div class="dropdown">
 				<input type="button" name="birthday" id="dropdate" value="">
 			</div>
+			-->
 
-			<div>
-				<div class="form-check form-check-inline">
-					<div class="custom-control custom-radio custom-control-inline">
-						<input type="radio" id="customRadioInline1" name="gender"	class="custom-control-input" value="Male">	
-						<label class="custom-control-label" for="customRadioInline1">Male</label>
-					</div>
-						
-					<div class="custom-control custom-radio custom-control-inline">
-						<input type="radio" id="customRadioInline2" name="gender" class="custom-control-input" value="Female"> 
-						<label class="custom-control-label" for="customRadioInline2">Female</label>
-					</div> 
+			<label for="selectDate">Date of Birth:</label>
+			<div class="form-group">
+				<div class="dropdown d-inline-block">
+					<select id="selectDate" name="selectDate" style="width:auto;" class="form-control selectWidth">
+						{% for x in DayMonthYear.day %}
+						<option class="">{{ x }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="dropdown d-inline-block">
+					<select id="selectMonth" name="selectMonth" style="width:auto;" class="form-control selectWidth">
+						{% for x in DayMonthYear.month %}
+						<option class="">{{ x }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="dropdown d-inline-block">
+					<select id="selectYear" name="selectYear" style="width:auto;" class="form-control selectWidth">
+						{% for x in DayMonthYear.year %}
+						<option class="">{{ x }}</option>
+						{% endfor %}
+					</select>
 				</div>
 			</div>
 
-			<div class="mb-3">
-				<input type="email" class="form-control" id="email" placeholder="email address" name="email" aria-describedby=""  required autofocus>
+
+
+
+		<!--GENDER-->
+		<div>
+			<div class="form-check form-check-inline">
+				<div class="custom-control custom-radio custom-control-inline">
+					<input type="radio" id="customRadioInline1" name="gender"	class="custom-control-input" value="Male" checked>	
+					<label class="custom-control-label" for="customRadioInline1">Male</label>
+				</div>
+
+				<div class="custom-control custom-radio custom-control-inline">
+					<input type="radio" id="customRadioInline2" name="gender" class="custom-control-input" value="Female"> 
+					<label class="custom-control-label" for="customRadioInline2">Female</label>
+				</div> 
 			</div>
-			
-		
-			<button type="submit" id="btn_submit" class="btn btn-primary">Register</button>
-
-
-		</form>
-
-		<div id="successmessage" title="Basic dialog"> 
-			<p>{{ success.message }}</p>		
 		</div>
-		<!--  href="/login" -->
-		<a href="" id="btn_redirect_login" class="btn btn-secondary"  style="visibility: hidden" >Login</a>
-		
-		<br>
-		<a href="/listuser">see all registered user</a>
+
+		<strong style="color: red">{{ error.error_email }}</strong>
+		<div class="mb-3">
+			<input type="email" class="form-control" id="email" value="alin@gmail.com" placeholder="email address" name="email" aria-describedby=""  required autofocus>
+		</div>
+
+
+		<button type="submit" id="btn_submit" class="btn btn-primary">Register</button>
+
+
+	</form>
+
+	<div id="successmessage" title="Basic dialog"> 
+		<p>{{ success.message }}</p>		
+	</div>
+	<!--  href="/login" -->
+	<a href="" id="btn_redirect_login" class="btn btn-secondary"  style="visibility: hidden" >Login</a>
+
+	<br>
+	<a href="/listuser">see all registered user</a>
 
 	{% include "snippets/footerscript.html" %}
-	
+
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 	<script  type="text/javascript" src="{% static "vendor/js/date.format.js" %}" ></script>
@@ -79,19 +111,24 @@
 
 	<script>
 		$(document).ready(function(){
-		    $('#dropdate').dropdate({
-		        dateFormat:'mm/dd/yyyy'
-		    });
+			$('#dropdate').dropdate({
+				dateFormat:'mm/dd/yyyy'
+			});
 		});
 
-    	if ($('#successmessage > p').is(':empty')) { 
- 	   		console.log("empty do nothing");		
+		if ($('#successmessage > p').is(':empty')) { 
+			console.log("empty do nothing");		
 		}else {
 			document.getElementById("btn_submit").disabled = true;
 			document.getElementById("mobilenumber").disabled = true;
 			document.getElementById("firstname").disabled = true;
 			document.getElementById("lastname").disabled = true;
 			document.getElementById("email").disabled = true;
+
+			document.getElementById("selectDate").disabled = true;
+			document.getElementById("selectMonth").disabled = true;
+			document.getElementById("selectYear").disabled = true;
+			
 			document.getElementById("btn_redirect_login").style.visibility = 'visible'
 		}
 	</script>
