@@ -18,11 +18,8 @@ import calendar
 import re
 from datetime import datetime
 
-def index(request) :
-	return render(request, 'index_registerApp.html')	
 
-
-def newuser(request) :
+def django_form(request) :
 	contextError = {}
 	contextSuccess = {}
 	contextDMY = {}
@@ -33,8 +30,6 @@ def newuser(request) :
 	now = datetime.now()
 	print now
 	year = now.strftime("%Y")
-
-
 
 	def DictDMY() :
 		contextDay = []
@@ -86,10 +81,11 @@ def newuser(request) :
 				error = "Mobile number must contain +628"
 				return (0, error)
 
-	#get dropdown year month day
 	DictDMY()
 
-	if request.method == 'POST':	
+	if request.method == 'POST' :
+		form = NameForm(request.POST)
+		#if form.is_valid() :		#need to use something like usercreationform from modelform django
 		check_firstname	= chkName(request.POST['firstname'])
 		check_lastname	= chkName(request.POST['lastname'])
 		check_mobilenumber	= chkMobilenumber(request.POST['mobilenumber'])
@@ -128,89 +124,15 @@ def newuser(request) :
 					mobilenumber=success_data["mobilenumber"], 
 					dateofbirth=check_DOB, 
 					gender=request.POST['gender'] )
-			data.save()
+			#data.save()
 			contextSuccess = {
 				'message' : "data successfully insert !"
 			}
 
+	else :
+		form = NameForm()
 
-	return render(request, 'register.html', {'error'	: contextError,
-											 'success'	: contextSuccess,
-											 'DayMonthYear'	: contextDMY})
-
-def listuser(request) :
-	item = Register.objects.all()
-	context = {
-		'item' 	:	item,
-	}
-	return render(request, 'listuser.html', context)
-
-
-def loginuser(request, pk) :
-	try:
-		RegisterData = Register.objects.get(email=pk)
-	except ObjectDoesNotExist:
-		print("Either the blog or entry doesn't exist.")
-
-
-##--------------##
-'''
-@api_view(['GET', 'POST', 'DELETE'])
-def register_user(request):
-	if request.method == 'GET':
-		register = Register.objects.all()
-        
-		id_register = request.GET.get('id', None)
-		if id_register is not None:
-			register = register.filter(id__contains=id_register)
-        
-		register_serializer = RegisterSerializer(register, many=True)
-		return JsonResponse(register_serializer.data, safe=False)
-        # 'safe=False' for objects serialization
-
-	elif request.method == 'POST':
-		register_data = JSONParser().parse(request)
-		register_serializer = RegisterSerializer(data=register_data)
-		if register_serializer.is_valid():
-			register_serializer.save()
-			return JsonResponse(register_serializer.data, status=status.HTTP_201_CREATED) 
-		return JsonResponse(register_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-	elif request.method == 'DELETE':
-		count = Register.objects.all().delete()
-		return JsonResponse({'message': '{} user deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
- 
- 
-@api_view(['GET', 'PUT', 'DELETE'])
-def register_detail(request, pk):
-	try: 
-		register = Register.objects.get(pk=pk) 
-	except Register.DoesNotExist: 
-		return JsonResponse({'message': 'The user does not exist'}, status=status.HTTP_404_NOT_FOUND) 
- 
-	if request.method == 'GET': 
-		register_serializer = RegisterSerializer(register) 
-		return JsonResponse(register_serializer.data) 
- 
-
-	elif request.method == 'PUT': 
-		register_data = JSONParser().parse(request) 
-		register_serializer = RegisterSerializer(register, data=register_data) 
-		if register_serializer.is_valid(): 
-			register_serializer.save() 
-			return JsonResponse(register_serializer.data) 
-		return JsonResponse(register_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
- 
-	elif request.method == 'DELETE': 
-		register.delete() 
-		return JsonResponse({'message': 'user deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
-    
-        
-@api_view(['GET'])
-def register_list(request):
-	register = Register.objects.filter(published=True)
-        
-	if request.method == 'GET': 
-		register_serializer = RegisterSerializer(register, many=True)
-		return JsonResponse(register_serializer.data, safe=False)
-'''
+	return render(request, 'register_djangoform.html', {'form'			: form,
+														'error'			: contextError,
+											 			'success'		: contextSuccess,
+														'DayMonthYear' 	: contextDMY})
