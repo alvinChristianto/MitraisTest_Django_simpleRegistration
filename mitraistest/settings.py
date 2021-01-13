@@ -143,3 +143,14 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8081',
 )
+
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#MAILER_EMAIL_BACKEND = EMAIL_BACKEND  
+
+EMAIL_HOST = 'smtp.gmail.com'  
+EMAIL_HOST_PASSWORD = 'timeUP93'  
+EMAIL_HOST_USER = 'tiusdsaklawase@gmail.com'  
+EMAIL_PORT = 587#465  
+EMAIL_USE_TLS = True  
+#EMAIL_USE_SSL = True  
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
